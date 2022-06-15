@@ -2,17 +2,21 @@
 
 
 <template>
-  <div>
-    <button @click="getResponse">кнопка</button>
-    <input v-model="city" />
-    <p>{{ weatherApp }}</p>
-  </div>
+  <search-form class="center"></search-form>
+  <weather-card :weatherApp="weatherApp"></weather-card>
 </template>
 
 <script lang="ts">
 import { WeatherApp } from "./businessLogic/WeatherApp";
 import { defineComponent } from "vue";
+import WeatherCard from "./components/WeatherCard.vue";
+import SearchForm from "./components/SearchForm.vue";
+
 export default defineComponent({
+  components: {
+    WeatherCard,
+    SearchForm,
+  },
   data() {
     return {
       weatherApp: new WeatherApp(),
