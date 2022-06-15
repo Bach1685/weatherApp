@@ -6,5 +6,5 @@ export interface IWeatherApp {
   weekDay: WeekDay;
   status: string;
   deg: number;
-  getWeather(lat: number, lon: number): Promise<any>;
+  updateWeather(lat: number, lon: number): Promise<any>;
 }
