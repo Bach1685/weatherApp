@@ -4,7 +4,8 @@
 <template>
   <div>
     <button @click="getResponse">кнопка</button>
-    <h1>{{ weatherApp }}</h1>
+    <input v-model="city" />
+    <p>{{ weatherApp }}</p>
   </div>
 </template>
 
@@ -15,11 +16,12 @@ export default defineComponent({
   data() {
     return {
       weatherApp: new WeatherApp(),
+      city: "",
     };
   },
   methods: {
     async getResponse(): Promise<any> {
-      await this.weatherApp.updateWeather(35, 139);
+      await this.weatherApp.updateWeather(this.city);
     },
   },
 });
