@@ -3,11 +3,13 @@ import { WeekDay } from "./WeekDay";
 import axios from "axios";
 
 export class WeatherApp implements IWeatherApp {
-  city = "";
+  city = "Москва";
   country = "";
   weekDay = WeekDay.Monday;
   status = "";
   deg = 20;
+  degF = 50;
+  symb = "&deg";
   async updateWeather(city: string): Promise<any> {
     const responseCoordinate = await axios.get(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=1f9bacfa4612bda68445c63f8d79f738`
