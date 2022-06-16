@@ -2,6 +2,7 @@
   <div class="main">
     <search-form class="search-form"></search-form>
     <weather-card :weatherApp="weatherApp"></weather-card>
+    <button @click="getResponse">кнопка</button>
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import { WeatherApp } from "./businessLogic/WeatherApp";
 import { defineComponent } from "vue";
 import SearchForm from "./components/SearchForm.vue";
 import WeatherCard from "./components/WeatherCard.vue";
+import weatherApi from "./api/WeatherApi/WeatherApi";
 
 export default defineComponent({
   components: {
@@ -19,12 +21,18 @@ export default defineComponent({
   data() {
     return {
       weatherApp: new WeatherApp(),
-      city: "",
+      city: "London",
     };
   },
   methods: {
     async getResponse(): Promise<any> {
-      await this.weatherApp.updateWeather(this.city);
+      const coordinates = await weatherApi.geo(this.city);
+      console.log(coordinates);
+      const resp = await weatherApi.data(
+        coordinates.data[0].lat,
+        coordinates.data[0].lon
+      );
+      console.log(resp);
     },
   },
 });

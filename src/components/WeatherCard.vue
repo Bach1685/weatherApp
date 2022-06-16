@@ -14,7 +14,7 @@
         <div class="data">
           <p class="data__location">{{ weatherApp.city }}</p>
           <p class="data__day">{{ weatherApp.weekDay }}</p>
-          <p class="data__deg">{{ weatherApp.deg }}</p>
+          <p class="data__deg">{{ weatherApp.deg }}° </p>
           <p class="data__degF">{{ weatherApp.degF }} F</p>
         </div>
       </div>
@@ -165,7 +165,6 @@ export default defineComponent({
 .data__day {
   width: 54px;
   height: 17px;
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
