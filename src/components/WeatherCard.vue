@@ -1,5 +1,5 @@
 <template>
-  <section class="card main__card card_sunny">
+  <section class="card main__card card_rainy">
     <div class="card__inner-card">
       <div class="content card__content">
         <div class="weather">

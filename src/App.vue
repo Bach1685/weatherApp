@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <search-form class="center"></search-form>
+    <search-form class="search-form"></search-form>
     <weather-card :weatherApp="weatherApp"></weather-card>
   </div>
 </template>
@@ -8,13 +8,13 @@
 <script lang="ts">
 import { WeatherApp } from "./businessLogic/WeatherApp";
 import { defineComponent } from "vue";
-import WeatherCard from "./components/WeatherCard.vue";
 import SearchForm from "./components/SearchForm.vue";
+import WeatherCard from "./components/WeatherCard.vue";
 
 export default defineComponent({
   components: {
-    WeatherCard,
     SearchForm,
+    WeatherCard,
   },
   data() {
     return {
@@ -123,6 +123,11 @@ h6 {
 /* -------- */
 
 .main {
-  margin: auto;
+  margin: 100px auto;
+  max-width: 652px;
+}
+
+.search-form {
+  margin: 20px auto;
 }
 </style>

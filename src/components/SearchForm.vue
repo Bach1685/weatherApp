@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent>
+  <form class="form" @submit.prevent>
     <input class="input" v-model="query" placeholder="Введите город..." />
     <button class="btn" @click="find">Поиск</button>
   </form>
@@ -45,5 +45,8 @@ export default defineComponent({
 .btn:hover {
   background-color: #555555;
   color: white;
+}
+.form {
+  max-width: 316px;
 }
 </style>
