@@ -1,21 +1,21 @@
 <template>
-  <section class="card main__card card_rainy">
+  <section class="card main__card" :class="card_state">
     <div class="card__inner-card">
       <div class="content card__content">
         <div class="weather">
-          <p class="weather__status">Cолнечно{{ weatherApp.status }}</p>
+          <p class="weather__description">{{ weatherData.description }}</p>
           <img
             class="weather__img"
-            src="../../src/assets/img/sun.png"
+            :src="getURL(weatherData.status)"
             alt="sun"
           />
         </div>
         <img class="line" src="../../src/assets/img/Line.png" alt="line" />
         <div class="data">
-          <p class="data__location">{{ weatherApp.city }}</p>
-          <p class="data__day">{{ weatherApp.weekDay }}</p>
-          <p class="data__deg">{{ weatherApp.deg }}° </p>
-          <p class="data__degF">{{ weatherApp.degF }} F</p>
+          <p class="data__place">{{ weatherData.place }}</p>
+          <p class="data__day">{{ weatherData.weekDay }}</p>
+          <p class="data__degC">{{ weatherData.degC }}°</p>
+          <p class="data__degF">{{ weatherData.degF }} F</p>
         </div>
       </div>
     </div>
@@ -23,16 +23,37 @@
 </template>
 
 <script lang="ts">
+import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
-    weatherApp: {
+    weatherData: {
       type: Object,
       required: true,
     },
     city: {
       type: String,
       default: "",
+    },
+  },
+  methods: {
+    getURL(name: WeatherStatus) {
+      console.log("имя", WeatherStatus[name].toLowerCase());
+      return require(`../../src/assets/img/${WeatherStatus[
+        name
+      ].toLowerCase()}.png`);
+    },
+  },
+  computed: {
+    card_state: function () {
+      console.log(this.weatherData);
+      return {
+        card_rainy: this.weatherData.status === WeatherStatus.Rain,
+        card_sunny: this.weatherData.status === WeatherStatus.Clear,
+        card_cloudy: this.weatherData.status === WeatherStatus.Clouds,
+        card_partlyСloudy:
+          this.weatherData.status === WeatherStatus.PartlyClouds,
+      };
     },
   },
 });
@@ -76,7 +97,7 @@ export default defineComponent({
   background: linear-gradient(63.82deg, #848ccf 0%, #b8bce6 125.57%);
 }
 
-.card__partly-cloudy {
+.card_partlyСloudy {
   background: linear-gradient(
     63.82deg,
     #05159e 0%,
@@ -134,8 +155,8 @@ export default defineComponent({
   height: 116px;
 }
 
-.weather__status {
-  width: 48px;
+.weather__description {
+  width: 200px;
   /* height: 19px; */
   font-family: "Inter";
   font-style: normal;
@@ -150,7 +171,7 @@ export default defineComponent({
   margin-left: 70px;
 }
 
-.data__location {
+.data__place {
   width: 116px;
   height: 19px;
   font-family: "Inter";
@@ -174,7 +195,7 @@ export default defineComponent({
   margin-bottom: 14px;
 }
 
-.data__deg {
+.data__degC {
   width: 62px;
   height: 44px;
   font-family: "Inter";

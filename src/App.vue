@@ -1,17 +1,17 @@
 <template>
   <div class="main">
     <search-form @find="find" class="search-form"></search-form>
-    <weather-card :weatherApp="weatherData"></weather-card>
+    <weather-card :weatherData="weatherData"></weather-card>
   </div>
 </template>
 
 <script lang="ts">
-import { WeatherData } from "./businessLogic/WeatherData";
+import { WeatherData } from "./businessLogic/WeatherData/WeatherData";
 import { defineComponent } from "vue";
 import SearchForm from "./components/SearchForm.vue";
 import WeatherCard from "./components/WeatherCard.vue";
 import { weatherApi } from "./api/WeatherApi/WeatherApi";
-import { mapper } from "./businessLogic/Mapper";
+import { Mapper } from "./businessLogic/Mapper";
 
 export default defineComponent({
   components: {
@@ -28,7 +28,7 @@ export default defineComponent({
     async find(query: any) {
       this.city = query;
       const weatherServerData = await weatherApi.getWeatherByPlace(this.city);
-      this.weatherData = mapper.map(weatherServerData);
+      this.weatherData = Mapper.map(weatherServerData);
     },
   },
   mounted() {
@@ -38,7 +38,7 @@ export default defineComponent({
           position.coords.latitude,
           position.coords.longitude
         );
-        this.weatherData = mapper.map(response);
+        this.weatherData = Mapper.map(response);
       },
       (error) => {
         console.error(error);
