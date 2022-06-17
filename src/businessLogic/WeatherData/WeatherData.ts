@@ -7,6 +7,7 @@ export class WeatherData implements IWeatherData {
   status = WeatherStatus.Clear;
   description = "";
   weekDay = WeekDay.Monday;
+  date = new Date(); 
   degC = 20;
   degF = 0;
 }

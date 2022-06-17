@@ -21,13 +21,11 @@ export default defineComponent({
   data() {
     return {
       weatherData: new WeatherData(),
-      city: "",
     };
   },
   methods: {
     async find(query: any) {
-      this.city = query;
-      const weatherServerData = await weatherApi.getWeatherByPlace(this.city);
+      const weatherServerData = await weatherApi.getWeatherByPlace(query);
       this.weatherData = Mapper.map(weatherServerData);
     },
   },

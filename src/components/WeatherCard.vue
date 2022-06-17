@@ -2,20 +2,24 @@
   <section class="wrapper main__wrapper" :class="wrapper_state">
     <div class="wrapper__card">
       <div class="content card__content">
-        <div class="weather">
-          <p class="weather__description">{{ weatherData.description }}</p>
+        <div class="content__weather">
+          <p class="content__description">{{ weatherData.description }}</p>
           <img
-            class="weather__img"
+            class="content__img"
             :src="getURL(weatherData.status)"
             alt="sun"
           />
         </div>
-        <img class="line" src="../../src/assets/img/line.png" alt="line" />
-        <div class="data">
-          <p class="data__place">{{ weatherData.place }}</p>
-          <p class="data__day">{{ weatherData.weekDay }}</p>
-          <p class="data__degC">{{ weatherData.degC }}°</p>
-          <p class="data__degF">{{ weatherData.degF }} F</p>
+        <img
+          class="content__line"
+          src="../../src/assets/img/line.png"
+          alt="line"
+        />
+        <div class="content__data">
+          <p class="content__place">{{ weatherData.place }}</p>
+          <p class="content__day">{{ weekDay }}</p>
+          <p class="content__degC">{{ weatherData.degC }}°</p>
+          <p class="content__degF">{{ weatherData.degF }} F</p>
         </div>
       </div>
     </div>
@@ -24,6 +28,7 @@
 
 <script lang="ts">
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
+import { WeekDay } from "@/businessLogic/enum/WeekDay";
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
@@ -38,7 +43,6 @@ export default defineComponent({
   },
   methods: {
     getURL(name: WeatherStatus) {
-      console.log("имя", WeatherStatus[name].toLowerCase());
       return require(`../../src/assets/img/${WeatherStatus[
         name
       ].toLowerCase()}.png`);
@@ -46,7 +50,6 @@ export default defineComponent({
   },
   computed: {
     wrapper_state: function () {
-      console.log(this.weatherData);
       return {
         wrapper_rainy: this.weatherData.status === WeatherStatus.Rain,
         wrapper_sunny: this.weatherData.status === WeatherStatus.Clear,
@@ -54,6 +57,10 @@ export default defineComponent({
         wrapper_partlyСloudy:
           this.weatherData.status === WeatherStatus.PartlyClouds,
       };
+    },
+
+    weekDay() {
+      return WeekDay[this.weatherData.date.getDay()];
     },
   },
 });
@@ -136,13 +143,13 @@ export default defineComponent({
   width: 359px;
 }
 
-.weather {
+.content__weather {
   width: 188px;
   height: 138px;
   position: relative;
 }
 
-.line {
+.content__line {
   width: 0px;
   height: 136px;
   left: 365px;
@@ -151,14 +158,13 @@ export default defineComponent({
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.data {
+.content__data {
   width: 116px;
   height: 116px;
 }
 
-.weather__description {
+.content__description {
   width: 200px;
-  /* height: 19px; */
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
@@ -168,14 +174,13 @@ export default defineComponent({
   color: #ffffff;
 }
 
-.weather__img {
+.content__img {
   position: absolute;
   right: 0px;
 }
 
-.data__place {
+.content__place {
   width: 116px;
-  height: 19px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
@@ -185,9 +190,8 @@ export default defineComponent({
   margin-bottom: 4px;
 }
 
-.data__day {
+.content__day {
   width: 54px;
-  height: 17px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
@@ -197,9 +201,8 @@ export default defineComponent({
   margin-bottom: 14px;
 }
 
-.data__degC {
+.content__degC {
   width: 62px;
-  height: 44px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
@@ -209,9 +212,8 @@ export default defineComponent({
   mix-blend-mode: overlay;
 }
 
-.data__degF {
+.content__degF {
   width: 45px;
-  height: 19px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;

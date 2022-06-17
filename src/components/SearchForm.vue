@@ -23,11 +23,21 @@ export default defineComponent({
 </script>
 
 <style>
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
 .input {
   font-size: 20px;
   height: 40px;
+  font-family: "Inter";
 }
 .btn {
+  font-family: "Inter";
   background-color: white;
   border: 2px solid #555555;
   color: black;
@@ -47,6 +57,6 @@ export default defineComponent({
   color: white;
 }
 .form {
-  max-width: 316px;
+  max-width: 450px;
 }
 </style>

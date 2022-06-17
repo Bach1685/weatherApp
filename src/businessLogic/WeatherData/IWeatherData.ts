@@ -8,4 +8,5 @@ export interface IWeatherData {
   description: string;
   degC: number;
   degF: number;
+  date: Date;
 }
