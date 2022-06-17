@@ -1,6 +1,6 @@
 <template>
-  <section class="card main__card" :class="card_state">
-    <div class="card__inner-card">
+  <section class="wrapper main__wrapper" :class="wrapper_state">
+    <div class="wrapper__card">
       <div class="content card__content">
         <div class="weather">
           <p class="weather__description">{{ weatherData.description }}</p>
@@ -10,7 +10,7 @@
             alt="sun"
           />
         </div>
-        <img class="line" src="../../src/assets/img/Line.png" alt="line" />
+        <img class="line" src="../../src/assets/img/line.png" alt="line" />
         <div class="data">
           <p class="data__place">{{ weatherData.place }}</p>
           <p class="data__day">{{ weatherData.weekDay }}</p>
@@ -45,13 +45,13 @@ export default defineComponent({
     },
   },
   computed: {
-    card_state: function () {
+    wrapper_state: function () {
       console.log(this.weatherData);
       return {
-        card_rainy: this.weatherData.status === WeatherStatus.Rain,
-        card_sunny: this.weatherData.status === WeatherStatus.Clear,
-        card_cloudy: this.weatherData.status === WeatherStatus.Clouds,
-        card_partlyСloudy:
+        wrapper_rainy: this.weatherData.status === WeatherStatus.Rain,
+        wrapper_sunny: this.weatherData.status === WeatherStatus.Clear,
+        wrapper_cloudy: this.weatherData.status === WeatherStatus.Clouds,
+        wrapper_partlyСloudy:
           this.weatherData.status === WeatherStatus.PartlyClouds,
       };
     },
@@ -68,7 +68,7 @@ export default defineComponent({
   font-weight: normal;
 }
 
-.card {
+.wrapper {
   max-width: 652px;
   height: 462px;
   box-shadow: 0px 2px 60px rgba(0, 0, 0, 0.25);
@@ -77,15 +77,15 @@ export default defineComponent({
   border-radius: 15px;
 }
 
-.main__card {
+.main__wrapper {
   position: relative;
 }
 
-.card_rainy {
+.wrapper_rainy {
   background: linear-gradient(63.82deg, #0539c0 0%, #5bc4ff 125.58%);
 }
 
-.card_sunny {
+.wrapper_sunny {
   background: linear-gradient(
     63.82deg,
     #da7211 0%,
@@ -93,11 +93,11 @@ export default defineComponent({
   );
 }
 
-.card_cloudy {
+.wrapper_cloudy {
   background: linear-gradient(63.82deg, #848ccf 0%, #b8bce6 125.57%);
 }
 
-.card_partlyСloudy {
+.wrapper_partlyСloudy {
   background: linear-gradient(
     63.82deg,
     #05159e 0%,
@@ -114,7 +114,7 @@ export default defineComponent({
   justify-content: space-between;
 }
 
-.card__inner-card {
+.wrapper__card {
   position: absolute;
   left: 114px;
   top: 136px;
@@ -139,6 +139,7 @@ export default defineComponent({
 .weather {
   width: 188px;
   height: 138px;
+  position: relative;
 }
 
 .line {
@@ -168,7 +169,8 @@ export default defineComponent({
 }
 
 .weather__img {
-  margin-left: 70px;
+  position: absolute;
+  right: 0px;
 }
 
 .data__place {
