@@ -1,4 +1,9 @@
+import { AxiosResponse } from "axios";
+
 export interface IWeatherApi {
-  geo(place: string): Promise<any>;
-  data(lat: number, lon: number): Promise<any>;
+  getWeatherByPlace(place: string): Promise<AxiosResponse<any, any>>;
+  getWeatherByCoordinates(
+    lat: number,
+    lon: number
+  ): Promise<AxiosResponse<any, any>>;
 }

@@ -1,17 +1,17 @@
 <template>
   <div class="main">
-    <search-form class="search-form"></search-form>
-    <weather-card :weatherApp="weatherApp"></weather-card>
-    <button @click="getResponse">кнопка</button>
+    <search-form @find="find" class="search-form"></search-form>
+    <weather-card :weatherApp="weatherData"></weather-card>
   </div>
 </template>
 
 <script lang="ts">
-import { WeatherApp } from "./businessLogic/WeatherApp";
+import { WeatherData } from "./businessLogic/WeatherData";
 import { defineComponent } from "vue";
 import SearchForm from "./components/SearchForm.vue";
 import WeatherCard from "./components/WeatherCard.vue";
-import weatherApi from "./api/WeatherApi/WeatherApi";
+import { weatherApi } from "./api/WeatherApi/WeatherApi";
+import { mapper } from "./businessLogic/Mapper";
 
 export default defineComponent({
   components: {
@@ -20,20 +20,30 @@ export default defineComponent({
   },
   data() {
     return {
-      weatherApp: new WeatherApp(),
-      city: "London",
+      weatherData: new WeatherData(),
+      city: "",
     };
   },
   methods: {
-    async getResponse(): Promise<any> {
-      const coordinates = await weatherApi.geo(this.city);
-      console.log(coordinates);
-      const resp = await weatherApi.data(
-        coordinates.data[0].lat,
-        coordinates.data[0].lon
-      );
-      console.log(resp);
+    async find(query: any) {
+      this.city = query;
+      const weatherServerData = await weatherApi.getWeatherByPlace(this.city);
+      this.weatherData = mapper.map(weatherServerData);
     },
+  },
+  mounted() {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const response = await weatherApi.getWeatherByCoordinates(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        this.weatherData = mapper.map(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   },
 });
 </script>

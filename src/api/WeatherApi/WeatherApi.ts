@@ -3,34 +3,35 @@ import { IWeatherApi } from "./IWeatherApi";
 class WeatherApi implements IWeatherApi {
   private key = "1f9bacfa4612bda68445c63f8d79f738";
 
-  async geo(place: string): Promise<any> {
+  async getWeatherByPlace(place: string): Promise<any> {
     try {
-      console.log(place);
-      await instance.get("/geo/1.0/direct", {
+      return await instance.get("/data/2.5/weather", {
         params: {
           q: place,
           appid: this.key,
           limit: 1,
+          lang: "ru",
         },
       });
     } catch (ex) {
-      console.log(ex);
+      return ex;
     }
   }
 
-  async data(lat: number, lon: number): Promise<any> {
+  async getWeatherByCoordinates(lat: number, lon: number): Promise<any> {
     try {
-      await instance.get("/data/2.5/weather", {
+      return await instance.get("/data/2.5/weather", {
         params: {
           lat: lat,
           lon: lon,
           appid: this.key,
+          lang: "ru",
         },
       });
     } catch (ex) {
-      console.log(ex);
+      return ex;
     }
   }
 }
 
-export default new WeatherApi();
+export const weatherApi = new WeatherApi();
