@@ -3,10 +3,10 @@
     <div class="wrapper__card">
       <div class="content card__content">
         <div class="content__weather">
-          <p class="content__description">{{ weatherData.description }}</p>
+          <p class="content__description">{{ weather.description }}</p>
           <img
             class="content__img"
-            :src="getURL(weatherData.status)"
+            :src="getURL(weather.status)"
             alt="sun"
           />
         </div>
@@ -16,10 +16,10 @@
           alt="line"
         />
         <div class="content__data">
-          <p class="content__place">{{ weatherData.place }}</p>
+          <p class="content__place">{{ weather.place }}</p>
           <p class="content__day">{{ weekDay }}</p>
-          <p class="content__degC">{{ weatherData.degC }}°</p>
-          <p class="content__degF">{{ weatherData.degF }} F</p>
+          <p class="content__degC">{{ weather.degC }}°</p>
+          <p class="content__degF">{{ weather.degF }} F</p>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@ import { WeekDay } from "@/businessLogic/enum/WeekDay";
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
-    weatherData: {
+    weather: {
       type: Object,
       required: true,
     },
@@ -51,16 +51,16 @@ export default defineComponent({
   computed: {
     wrapper_state: function () {
       return {
-        wrapper_rainy: this.weatherData.status === WeatherStatus.Rain,
-        wrapper_sunny: this.weatherData.status === WeatherStatus.Clear,
-        wrapper_cloudy: this.weatherData.status === WeatherStatus.Clouds,
+        wrapper_rainy: this.weather.status === WeatherStatus.Rain,
+        wrapper_sunny: this.weather.status === WeatherStatus.Clear,
+        wrapper_cloudy: this.weather.status === WeatherStatus.Clouds,
         wrapper_partlyСloudy:
-          this.weatherData.status === WeatherStatus.PartlyClouds,
+          this.weather.status === WeatherStatus.PartlyClouds,
       };
     },
 
     weekDay() {
-      return WeekDay[this.weatherData.date.getDay()];
+      return WeekDay[this.weather.date.getDay()];
     },
   },
 });

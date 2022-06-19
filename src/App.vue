@@ -1,17 +1,17 @@
 <template>
   <div class="main">
     <search-form @find="find" class="search-form"></search-form>
-    <weather-card :weatherData="weatherData"></weather-card>
+    <weather-card :weather="weather"></weather-card>
   </div>
 </template>
 
 <script lang="ts">
-import { WeatherData } from "./businessLogic/WeatherData/WeatherData";
 import { defineComponent } from "vue";
 import SearchForm from "./components/SearchForm.vue";
 import WeatherCard from "./components/WeatherCard.vue";
 import { weatherApi } from "./api/WeatherApi/WeatherApi";
 import { Mapper } from "./businessLogic/Mapper";
+import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 
 export default defineComponent({
   components: {
@@ -20,13 +20,21 @@ export default defineComponent({
   },
   data() {
     return {
-      weatherData: new WeatherData(),
+      weather: {
+        place: '',
+        status: WeatherStatus.Clear,
+        description: '',
+        degC: 0,
+        degF: 0,
+        date: new Date(),
+      },
     };
   },
   methods: {
     async find(query: any) {
       const weatherServerData = await weatherApi.getWeatherByPlace(query);
-      this.weatherData = Mapper.map(weatherServerData);
+      console.log(weatherServerData);
+      this.weather = Mapper.map(weatherServerData);
     },
   },
   mounted() {
@@ -36,7 +44,7 @@ export default defineComponent({
           position.coords.latitude,
           position.coords.longitude
         );
-        this.weatherData = Mapper.map(response);
+        this.weather = Mapper.map(response);
       },
       (error) => {
         console.error(error);
