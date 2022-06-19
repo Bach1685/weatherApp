@@ -31,7 +31,7 @@ export default defineComponent({
     };
   },
   methods: {
-    async find(query: any) {
+    async find(query: string) {
       const weatherServerData = await weatherApi.getWeatherByPlace(query);
       console.log(weatherServerData);
       this.weather = Mapper.map(weatherServerData);
