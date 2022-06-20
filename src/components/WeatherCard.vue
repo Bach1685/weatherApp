@@ -67,14 +67,12 @@ export default defineComponent({
   src: url("@/assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
     format("truetype");
   font-style: normal;
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .wrapper {
   max-width: 652px;
   height: 462px;
-  box-shadow: 0px 2px 60px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
   box-shadow: 0px 2px 60px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
