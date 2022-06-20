@@ -2,7 +2,7 @@ import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { Weather } from "@/businessLogic/Weather";
 
 export class Mapper {
-  static getWeatherStatus(weatherId: number) : WeatherStatus {
+  static getWeatherStatus(weatherId: number): WeatherStatus {
     if (weatherId < 700) {
       return WeatherStatus.Rain;
     }
@@ -16,19 +16,16 @@ export class Mapper {
     return WeatherStatus.PartlyClouds;
   }
   static map(responseFromServer: any): Weather {
+    console.log(responseFromServer);
     return {
-      place: responseFromServer.data.name,
-        status: this.getWeatherStatus(
-          responseFromServer.data.weather[0].id
-        ),
-        description: responseFromServer.data.weather[0].description,
-        degC: Math.round(
-          this.toCelsius(responseFromServer.data.main.temp)
-        ),
-        degF: Math.round(
-          this.toFahrenheit(responseFromServer.data.main.temp)
-        ),
-        date: new Date(),
+      place: `${responseFromServer.data.name}, ${new Intl.DisplayNames("ru", {
+        type: "region",
+      }).of(responseFromServer.data.sys.country)}`,
+      status: this.getWeatherStatus(responseFromServer.data.weather[0].id),
+      description: responseFromServer.data.weather[0].description,
+      degC: Math.round(this.toCelsius(responseFromServer.data.main.temp)),
+      degF: Math.round(this.toFahrenheit(responseFromServer.data.main.temp)),
+      date: new Date(),
     };
   }
   static toCelsius(kelvin: number) {
