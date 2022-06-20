@@ -7,10 +7,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import SearchForm from "./components/SearchForm.vue";
-import WeatherCard from "./components/WeatherCard.vue";
-import { weatherApi } from "./api/WeatherApi/WeatherApi";
-import { Mapper } from "./businessLogic/Mapper";
+import SearchForm from "@/components/SearchForm.vue";
+import WeatherCard from "@/components/WeatherCard.vue";
+import { weatherApi } from "@/api/WeatherApi/WeatherApi";
+import { Mapper } from "@/businessLogic/Mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 
 export default defineComponent({

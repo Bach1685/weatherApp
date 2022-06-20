@@ -44,9 +44,7 @@ export default defineComponent({
   },
   methods: {
     getURL(name: WeatherStatus) {
-      return require(`../../src/assets/img/${WeatherStatus[
-        name
-      ].toLowerCase()}.png`);
+      return require(`@/assets/img/${WeatherStatus[name].toLowerCase()}.png`);
     },
   },
   computed: {
@@ -66,7 +64,7 @@ export default defineComponent({
 <style scoped>
 @font-face {
   font-family: "Inter";
-  src: url("../assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
+  src: url("@/assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
     format("truetype");
   font-style: normal;
   font-weight: normal;

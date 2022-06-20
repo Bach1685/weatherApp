@@ -25,7 +25,7 @@ export default defineComponent({
 <style>
 @font-face {
   font-family: "Inter";
-  src: url("../assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
+  src: url("@/assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
     format("truetype");
   font-style: normal;
   font-weight: normal;
