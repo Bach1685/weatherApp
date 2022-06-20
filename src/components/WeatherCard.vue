@@ -1,16 +1,12 @@
 <template>
-  <section class="wrapper main__wrapper" :class="wrapper_state">
+  <section class="wrapper" :class="wrapper_state">
     <div class="wrapper__card">
-      <div class="content card__content">
+      <div class="content wrapper__content">
         <div class="content__weather">
           <p class="content__description">{{ weather.description }}</p>
           <img class="content__img" :src="getURL(weather.status)" alt="sun" />
         </div>
-        <img
-          class="content__line"
-          src="../../src/assets/img/line.png"
-          alt="line"
-        />
+        <img class="content__line" src="@/assets/img/line.png" alt="line" />
         <div class="content__data">
           <p class="content__place">{{ weather.place }}</p>
           <p class="content__day">
@@ -77,10 +73,6 @@ export default defineComponent({
   border-radius: 15px;
 }
 
-.main__wrapper {
-  position: relative;
-}
-
 .wrapper_rainy {
   background: linear-gradient(63.82deg, #0539c0 0%, #5bc4ff 125.58%);
 }
@@ -131,7 +123,7 @@ export default defineComponent({
   border-radius: 15px;
 }
 
-.card__content {
+.wrapper__content {
   margin: 25px auto;
   width: 359px;
 }

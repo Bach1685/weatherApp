@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <search-form @find="find" class="search-form"></search-form>
-    <weather-card :weather="weather"></weather-card>
+    <weather-card :weather="weather" class="main__wrapper"></weather-card>
   </div>
 </template>
 
@@ -33,32 +33,38 @@ export default defineComponent({
   methods: {
     async find(query: string) {
       const weatherServerData = await weatherApi.getWeatherByPlace(query);
-      console.log(weatherServerData);
       this.weather = Mapper.map(weatherServerData);
     },
   },
   mounted() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        const response = await weatherApi.getWeatherByCoordinates(
+        const weatherServerData = await weatherApi.getWeatherByCoordinates(
           position.coords.latitude,
           position.coords.longitude
         );
-        this.weather = Mapper.map(response);
+        this.weather = Mapper.map(weatherServerData);
       },
       (error) => {
         console.error(error);
       }
     );
-
-    console.log(
-      new Date().toLocaleString("ru", {
-        weekday: "long",
-      })
-    );
   },
 });
 </script>
+
+<style scoped>
+.main {
+  margin: 100px auto;
+  max-width: 652px;
+}
+.main__wrapper {
+  position: relative;
+}
+.search-form {
+  margin: 20px auto;
+}
+</style>
 
 <style>
 /*Обнуление*/
@@ -151,13 +157,4 @@ h6 {
   font-weight: 400;
 }
 /* -------- */
-
-.main {
-  margin: 100px auto;
-  max-width: 652px;
-}
-
-.search-form {
-  margin: 20px auto;
-}
 </style>
