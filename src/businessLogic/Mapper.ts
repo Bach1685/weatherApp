@@ -16,7 +16,6 @@ export class Mapper {
     return WeatherStatus.PartlyClouds;
   }
   static map(responseFromServer: any): Weather {
-    console.log(responseFromServer);
     return {
       place: `${responseFromServer.data.name}, ${new Intl.DisplayNames("ru", {
         type: "region",

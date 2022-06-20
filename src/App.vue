@@ -32,8 +32,12 @@ export default defineComponent({
   },
   methods: {
     async find(query: string) {
-      const weatherServerData = await weatherApi.getWeatherByPlace(query);
-      this.weather = Mapper.map(weatherServerData);
+      try {
+        const weatherServerData = await weatherApi.getWeatherByPlace(query);
+        this.weather = Mapper.map(weatherServerData);
+      } catch (ex) {
+        alert(ex);
+      }
     },
   },
   mounted() {

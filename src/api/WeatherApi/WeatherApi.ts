@@ -13,8 +13,8 @@ class WeatherApi implements IWeatherApi {
           lang: "ru",
         },
       });
-    } catch (ex) {
-      return ex;
+    } catch (ex: any) {
+      throw new Error(ex.message);
     }
   }
 
@@ -28,8 +28,8 @@ class WeatherApi implements IWeatherApi {
           lang: "ru",
         },
       });
-    } catch (ex) {
-      return ex;
+    } catch (ex: any) {
+      throw new Error(ex.message);
     }
   }
 }
