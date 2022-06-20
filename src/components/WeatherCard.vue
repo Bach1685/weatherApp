@@ -4,11 +4,7 @@
       <div class="content card__content">
         <div class="content__weather">
           <p class="content__description">{{ weather.description }}</p>
-          <img
-            class="content__img"
-            :src="getURL(weather.status)"
-            alt="sun"
-          />
+          <img class="content__img" :src="getURL(weather.status)" alt="sun" />
         </div>
         <img
           class="content__line"
@@ -17,7 +13,13 @@
         />
         <div class="content__data">
           <p class="content__place">{{ weather.place }}</p>
-          <p class="content__day">{{ weekDay }}</p>
+          <p class="content__day">
+            {{
+              weather.date.toLocaleString("ru", {
+                weekday: "long",
+              })
+            }}
+          </p>
           <p class="content__degC">{{ weather.degC }}°</p>
           <p class="content__degF">{{ weather.degF }} F</p>
         </div>
@@ -28,7 +30,6 @@
 
 <script lang="ts">
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
-import { WeekDay } from "@/businessLogic/enum/WeekDay";
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
@@ -57,10 +58,6 @@ export default defineComponent({
         wrapper_partlyСloudy:
           this.weather.status === WeatherStatus.PartlyClouds,
       };
-    },
-
-    weekDay() {
-      return WeekDay[this.weather.date.getDay()];
     },
   },
 });

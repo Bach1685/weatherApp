@@ -21,9 +21,9 @@ export default defineComponent({
   data() {
     return {
       weather: {
-        place: '',
+        place: "",
         status: WeatherStatus.Clear,
-        description: '',
+        description: "",
         degC: 0,
         degF: 0,
         date: new Date(),
@@ -49,6 +49,12 @@ export default defineComponent({
       (error) => {
         console.error(error);
       }
+    );
+
+    console.log(
+      new Date().toLocaleString("ru", {
+        weekday: "long",
+      })
     );
   },
 });
