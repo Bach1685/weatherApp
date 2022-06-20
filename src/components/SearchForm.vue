@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent>
+  <form class="search-form" @submit.prevent>
     <input class="input" v-model="query" placeholder="Введите город..." />
     <button class="btn" @click="find">Поиск</button>
   </form>
@@ -34,6 +34,7 @@ export default defineComponent({
 .input {
   font-size: 20px;
   height: 40px;
+  width: 200px;
   font-family: "Inter";
 }
 .btn {
@@ -53,7 +54,7 @@ export default defineComponent({
   background-color: #555555;
   color: white;
 }
-.form {
-  max-width: 450px;
+.search-form {
+  max-width: 350px;
 }
 </style>
