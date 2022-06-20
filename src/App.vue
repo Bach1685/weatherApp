@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <search-form @find="find" class="search-form"></search-form>
+    <search-form @find="find" class="main__search-form"></search-form>
     <weather-card :weather="weather" class="main__wrapper"></weather-card>
   </div>
 </template>
@@ -65,8 +65,11 @@ export default defineComponent({
 .main__wrapper {
   position: relative;
 }
-.search-form {
+.main__search-form {
   margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
 

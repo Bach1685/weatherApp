@@ -68,7 +68,7 @@ export default defineComponent({
 
 .wrapper {
   max-width: 652px;
-  height: 462px;
+  min-height: 462px;
   box-shadow: 0px 2px 60px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
@@ -100,18 +100,24 @@ export default defineComponent({
 
 .content {
   box-sizing: border-box;
-  width: 359px;
-  height: 138px;
+  max-width: 359px;
+  min-height: 138px;
   display: flex;
-  justify-content: space-between;
+  gap: 25px;
+}
+
+@media (max-width: 500px) {
+  .content {
+    flex-direction: column;
+  }
 }
 
 .wrapper__card {
-  position: absolute;
-  left: 114px;
+  position: relative;
   top: 136px;
-  width: 424px;
-  height: 189px;
+  margin: auto;
+  max-width: 424px;
+  min-height: 189px;
   background: linear-gradient(
     116.46deg,
     rgba(255, 255, 255, 0.4) 14.63%,
@@ -123,29 +129,44 @@ export default defineComponent({
   border-radius: 15px;
 }
 
+@media (max-width: 500px) {
+  .wrapper__card {
+    max-width: 270px;
+    top: 36px;
+    height: 380px;
+  }
+}
+
 .wrapper__content {
-  margin: 25px auto;
-  width: 359px;
+  position: relative;
+  top: 25px;
+  margin: auto;
 }
 
 .content__weather {
-  width: 188px;
-  height: 138px;
+  max-width: 188px;
+  min-height: 138px;
   position: relative;
+  margin: auto;
 }
 
 .content__line {
   width: 0px;
   height: 136px;
-  left: 365px;
-  top: 162px;
   border: 2px solid #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 500px) {
+  .content__line {
+    display: none;
+  }
 }
 
 .content__data {
   width: 116px;
   height: 116px;
+  margin: auto;
 }
 
 .content__description {
