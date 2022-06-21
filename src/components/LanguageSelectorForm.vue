@@ -31,7 +31,6 @@ export default defineComponent({
 
 <style>
 .select {
-  float: right;
   font-size: 20px;
   width: 50px;
 }

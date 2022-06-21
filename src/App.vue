@@ -1,7 +1,18 @@
 <template>
   <div class="main">
-    <language-selector-form v-model="lang" :options="languages" />
-    <search-form @find="find" class="main__search-form"></search-form>
+    <language-selector-form
+      v-model="lang"
+      :options="languages"
+      class="main__language-selector-form"
+    />
+    <search-form
+      @find="find"
+      :translates="{
+        search: translater.getTranslateById(1, lang),
+        enterTheCity: translater.getTranslateById(2, lang),
+      }"
+      class="main__search-form"
+    ></search-form>
     <weather-card
       :weather="weather"
       :lang="lang"
@@ -18,6 +29,7 @@ import { weatherApi } from "@/api/WeatherApi/WeatherApi";
 import { Mapper } from "@/businessLogic/Mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import LanguageSelectorForm from "@/components/LanguageSelectorForm.vue";
+import { translater } from "./lang/translations";
 export default defineComponent({
   components: {
     LanguageSelectorForm,
@@ -34,8 +46,9 @@ export default defineComponent({
         degF: 0,
         date: new Date(),
       },
-      languages: ["en", "ru", "fr"],
+      languages: translater.availableCountriesCodes,
       lang: "ru",
+      translater: translater,
     };
   },
   methods: {
@@ -93,6 +106,10 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.main__language-selector-form {
+  float: right;
 }
 </style>
 
