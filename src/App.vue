@@ -4,7 +4,7 @@
       v-model="lang"
       :options="languages"
     ></language-selector-form> -->
-    <select class="select" v-model="lang">
+    <select class="select" v-model="lang" @change="changeLang">
       <option v-for="language of languages" :value="language" :key="language">
         {{ language }}
       </option>
@@ -59,10 +59,12 @@ export default defineComponent({
       }
     },
 
-    changeOption(lang: string) {
-      console.log(lang);
+    changeLang(event: any) {
+      console.log(event.target.value);
+      this.find(this.weather.place);
     },
   },
+
   mounted() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
