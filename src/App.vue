@@ -21,9 +21,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { weatherApi } from "@/api/WeatherApi/WeatherApi";
-import { Mapper } from "@/businessLogic/Mapper";
+import { mapper } from "@/mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
-import { Translater } from "./lang/Translater";
+import { Translater } from "@/lang/Translater";
 export default defineComponent({
   data() {
     return {
@@ -61,7 +61,7 @@ export default defineComponent({
           query,
           this.lang
         );
-        this.weather = Mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData, this.lang);
       } catch (ex) {
         alert(ex);
       }
@@ -81,7 +81,7 @@ export default defineComponent({
           position.coords.longitude,
           this.lang
         );
-        this.weather = Mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData, this.lang);
       },
       (error) => {
         console.error(error);
