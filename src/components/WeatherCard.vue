@@ -11,7 +11,7 @@
           <p class="content__place">{{ weather.place }}</p>
           <p class="content__day">
             {{
-              weather.date.toLocaleString("ru", {
+              weather.date.toLocaleString(lang, {
                 weekday: "long",
               })
             }}
@@ -33,9 +33,9 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    city: {
+    lang: {
       type: String,
-      default: "",
+      default: "ru",
     },
   },
   methods: {

@@ -1,7 +1,20 @@
 <template>
   <div class="main">
-    <search-form @find="find" class="main__search-form"></search-form>
-    <weather-card :weather="weather" class="main__wrapper"></weather-card>
+    <language-selector-form
+      v-model="lang"
+      :options="languages"
+      class="main__language-selector-form"
+    />
+    <search-form
+      @find="find"
+      :translates="searchFormTranslates"
+      class="main__search-form"
+    ></search-form>
+    <weather-card
+      :weather="weather"
+      :lang="lang"
+      class="main__wrapper"
+    ></weather-card>
   </div>
 </template>
 
@@ -12,9 +25,11 @@ import WeatherCard from "@/components/WeatherCard.vue";
 import { weatherApi } from "@/api/WeatherApi/WeatherApi";
 import { Mapper } from "@/businessLogic/Mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
-
+import LanguageSelectorForm from "@/components/LanguageSelectorForm.vue";
+import { Translater } from "./lang/Translater";
 export default defineComponent({
   components: {
+    LanguageSelectorForm,
     SearchForm,
     WeatherCard,
   },
@@ -28,26 +43,53 @@ export default defineComponent({
         degF: 0,
         date: new Date(),
       },
+      lang: "en",
+      translater: new Translater(),
     };
+  },
+  computed: {
+    searchFormTranslates(): any {
+      const getTranstale = (): any => {
+        return {
+          search: this.translater.getTranslateById(1, this.lang),
+          enterTheCity: this.translater.getTranslateById(2, this.lang),
+        };
+      };
+      return getTranstale();
+    },
+
+    languages(): string[] {
+      return this.translater.availableCountriesCodes;
+    },
   },
   methods: {
     async find(query: string) {
       try {
-        const weatherServerData = await weatherApi.getWeatherByPlace(query);
-        this.weather = Mapper.map(weatherServerData);
+        const weatherServerData = await weatherApi.getWeatherByPlace(
+          query,
+          this.lang
+        );
+        this.weather = Mapper.map(weatherServerData, this.lang);
       } catch (ex) {
         alert(ex);
       }
     },
   },
+  watch: {
+    async lang() {
+      await this.find(this.weather.place);
+    },
+  },
+
   mounted() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const weatherServerData = await weatherApi.getWeatherByCoordinates(
           position.coords.latitude,
-          position.coords.longitude
+          position.coords.longitude,
+          this.lang
         );
-        this.weather = Mapper.map(weatherServerData);
+        this.weather = Mapper.map(weatherServerData, this.lang);
       },
       (error) => {
         console.error(error);
@@ -70,6 +112,10 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.main__language-selector-form {
+  float: right;
 }
 </style>
 

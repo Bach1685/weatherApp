@@ -1,7 +1,11 @@
 <template>
   <form class="search-form" @submit.prevent>
-    <input class="input" v-model="query" placeholder="Введите город..." />
-    <button class="btn" @click="find">Поиск</button>
+    <input
+      class="input"
+      v-model="query"
+      :placeholder="`${translates.enterTheCity}...`"
+    />
+    <button class="btn" @click="find">{{ translates.search }}</button>
   </form>
 </template>
 
@@ -9,6 +13,12 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  props: {
+    translates: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       query: "",
