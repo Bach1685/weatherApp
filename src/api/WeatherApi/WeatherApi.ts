@@ -21,7 +21,7 @@ class WeatherApi implements IWeatherApi {
   async getWeatherByCoordinates(
     lat: number,
     lon: number,
-    lang = "ru"
+    lang = "en"
   ): Promise<any> {
     try {
       return await instance.get("/data/2.5/weather", {

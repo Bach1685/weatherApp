@@ -1,4 +1,4 @@
-class Translater {
+export class Translater {
   get availableCountriesCodes(): string[] {
     return this.expressions[0].translations.map(
       (translation) => translation.countryCode
@@ -34,12 +34,11 @@ class Translater {
   ];
 
   getTranslateById(id: number, lang: string): string {
-    console.log("+");
-    const expression: string | undefined = this.findInExpressions(id, lang);
+    const expression: string | undefined = this.findExpression(id, lang);
     return expression ? expression : "";
   }
 
-  private findInExpressions(id: number, lang: string): string | undefined {
+  private findExpression(id: number, lang: string): string | undefined {
     return this.expressions
       .find((expression) => expression.id == id)
       ?.translations.find(
@@ -47,22 +46,3 @@ class Translater {
       )?.expression;
   }
 }
-
-export const translater = new Translater();
-
-//   translations = [
-//     {
-//       id: 1,
-//       value: {
-//         ru: "Поиск",
-//         en: "Search",
-//       },
-//     },
-//     {
-//       id: 2,
-//       value: {
-//         ru: "Введите город",
-//         en: "Enter the city",
-//       },
-//     },
-//   ];

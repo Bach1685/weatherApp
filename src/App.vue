@@ -7,10 +7,7 @@
     />
     <search-form
       @find="find"
-      :translates="{
-        search: translater.getTranslateById(1, lang),
-        enterTheCity: translater.getTranslateById(2, lang),
-      }"
+      :translates="searchFormTranslates"
       class="main__search-form"
     ></search-form>
     <weather-card
@@ -29,7 +26,7 @@ import { weatherApi } from "@/api/WeatherApi/WeatherApi";
 import { Mapper } from "@/businessLogic/Mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import LanguageSelectorForm from "@/components/LanguageSelectorForm.vue";
-import { translater } from "./lang/translations";
+import { Translater } from "./lang/Translater";
 export default defineComponent({
   components: {
     LanguageSelectorForm,
@@ -46,10 +43,24 @@ export default defineComponent({
         degF: 0,
         date: new Date(),
       },
-      languages: translater.availableCountriesCodes,
-      lang: "ru",
-      translater: translater,
+      lang: "en",
+      translater: new Translater(),
     };
+  },
+  computed: {
+    searchFormTranslates(): any {
+      const getTranstale = (): any => {
+        return {
+          search: this.translater.getTranslateById(1, this.lang),
+          enterTheCity: this.translater.getTranslateById(2, this.lang),
+        };
+      };
+      return getTranstale();
+    },
+
+    languages(): string[] {
+      return this.translater.availableCountriesCodes;
+    },
   },
   methods: {
     async find(query: string) {
@@ -63,14 +74,9 @@ export default defineComponent({
         alert(ex);
       }
     },
-
-    changeLang(event: any) {
-      console.log(event.target.value);
-      this.find(this.weather.place);
-    },
   },
   watch: {
-    async lang(newValue) {
+    async lang() {
       await this.find(this.weather.place);
     },
   },
