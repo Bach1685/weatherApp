@@ -23,7 +23,7 @@ import { defineComponent } from "vue";
 import { weatherApi } from "@/api/WeatherApi/WeatherApi";
 import { mapper } from "@/mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
-import { Translater } from "@/lang/Translater";
+import { translater } from "@/lang";
 export default defineComponent({
   data() {
     return {
@@ -36,22 +36,20 @@ export default defineComponent({
         date: new Date(),
       },
       lang: "en",
-      translater: new Translater(),
     };
   },
   computed: {
     searchFormTranslates(): any {
-      const getTranstale = (): any => {
-        return {
-          search: this.translater.getTranslateById(1, this.lang),
-          enterTheCity: this.translater.getTranslateById(2, this.lang),
-        };
+      const searchId = 1;
+      const enterTheCityId = 2;
+      return {
+        search: translater.getTranslateById(searchId, this.lang),
+        enterTheCity: translater.getTranslateById(enterTheCityId, this.lang),
       };
-      return getTranstale();
     },
 
     languages(): string[] {
-      return this.translater.availableCountriesCodes;
+      return translater.availableCountriesCodes;
     },
   },
   methods: {
