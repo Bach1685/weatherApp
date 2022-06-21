@@ -34,7 +34,7 @@ export default defineComponent({
         degF: 0,
         date: new Date(),
       },
-      languages: ["en", "ru"],
+      languages: ["en", "ru", "fr"],
       lang: "ru",
     };
   },
