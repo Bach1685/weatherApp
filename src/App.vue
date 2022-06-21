@@ -1,14 +1,6 @@
 <template>
   <div class="main">
-    <!-- <language-selector-form
-      v-model="lang"
-      :options="languages"
-    ></language-selector-form> -->
-    <select class="select" v-model="lang" @change="changeLang">
-      <option v-for="language of languages" :value="language" :key="language">
-        {{ language }}
-      </option>
-    </select>
+    <language-selector-form v-model="lang" :options="languages" />
     <search-form @find="find" class="main__search-form"></search-form>
     <weather-card
       :weather="weather"
@@ -28,7 +20,7 @@ import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import LanguageSelectorForm from "@/components/LanguageSelectorForm.vue";
 export default defineComponent({
   components: {
-    // LanguageSelectorForm,
+    LanguageSelectorForm,
     SearchForm,
     WeatherCard,
   },
@@ -62,6 +54,11 @@ export default defineComponent({
     changeLang(event: any) {
       console.log(event.target.value);
       this.find(this.weather.place);
+    },
+  },
+  watch: {
+    async lang(newValue) {
+      await this.find(this.weather.place);
     },
   },
 

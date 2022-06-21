@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <select class="select" :value="modelValue" @change="changeOption">
-      <option v-for="option of options" :value="option" :key="option">
-        {{ option }}
-      </option>
-    </select>
-  </div>
+  <select class="select" :value="modelValue" @change="changeOption">
+    <option disabled value="">lang</option>
+    <option v-for="option of options" :key="option" :value="option">
+      {{ option }}
+    </option>
+  </select>
 </template>
 
 <script lang="ts">
