@@ -3,14 +3,14 @@ import { IWeatherApi } from "./IWeatherApi";
 class WeatherApi implements IWeatherApi {
   private key = "1f9bacfa4612bda68445c63f8d79f738";
 
-  async getWeatherByPlace(place: string): Promise<any> {
+  async getWeatherByPlace(place: string, lang = "ru"): Promise<any> {
     try {
       return await instance.get("/data/2.5/weather", {
         params: {
           q: place,
           appid: this.key,
           limit: 1,
-          lang: "ru",
+          lang: lang,
         },
       });
     } catch (ex: any) {
@@ -18,14 +18,18 @@ class WeatherApi implements IWeatherApi {
     }
   }
 
-  async getWeatherByCoordinates(lat: number, lon: number): Promise<any> {
+  async getWeatherByCoordinates(
+    lat: number,
+    lon: number,
+    lang = "ru"
+  ): Promise<any> {
     try {
       return await instance.get("/data/2.5/weather", {
         params: {
           lat: lat,
           lon: lon,
           appid: this.key,
-          lang: "ru",
+          lang: lang,
         },
       });
     } catch (ex: any) {
