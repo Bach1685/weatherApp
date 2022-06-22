@@ -1,11 +1,24 @@
 <template>
-  <form class="search-form" @submit.prevent>
-    <input
-      class="input"
-      v-model="query"
-      :placeholder="`${translates.enterTheCity}...`"
-    />
-    <button class="btn" @click="find">{{ translates.search }}</button>
+  <form @submit.prevent>
+    <div class="search-form">
+      <input
+        class="input"
+        v-model="query"
+        :placeholder="`${translates.enterTheCity}...`"
+        @keypress="keypress"
+      />
+      <button class="btn" @click="find">{{ translates.search }}</button>
+    </div>
+    <ul class="list">
+      <li
+        class="list__elem"
+        @click="choiseCity(city)"
+        v-for="city of cities"
+        :key="city"
+      >
+        {{ city }}
+      </li>
+    </ul>
   </form>
 </template>
 
@@ -19,6 +32,9 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    cities: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -28,6 +44,13 @@ export default defineComponent({
   methods: {
     find() {
       this.$emit("find", this.query);
+    },
+    keypress() {
+      this.$emit("keypress", this.query);
+    },
+    choiseCity(city: string) {
+      console.log(city);
+      this.$emit("choiseCity", city);
     },
   },
 });
@@ -42,6 +65,17 @@ export default defineComponent({
   font-weight: normal;
 }
 
+.list__elem {
+  font-family: "Inter";
+  font-size: 16px;
+  line-height: 1.5;
+  width: 200px;
+}
+.list__elem:hover {
+  /* color: yellow; */
+  cursor: pointer;
+  background: rgb(185, 175, 175);
+}
 .input {
   font-size: 20px;
   height: 40px;

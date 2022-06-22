@@ -8,7 +8,10 @@
     <search-form
       @find="find"
       :translates="searchFormTranslates"
+      :cities="cities"
       class="main__search-form"
+      @keypress="findCities"
+      @choiseCity="choiseCity"
     ></search-form>
     <weather-card
       :weather="weather"
@@ -24,6 +27,8 @@ import { weatherApi } from "@/api/WeatherApi";
 import { mapper } from "@/mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { translater } from "@/lang";
+import { citiesApi } from "./api/CitiesApi";
+// import cities from "@/db";
 export default defineComponent({
   data() {
     return {
@@ -35,7 +40,10 @@ export default defineComponent({
         degF: 0,
         date: new Date(),
       },
+      query: "",
       lang: "en",
+      options: HTMLOptionsCollection,
+      cities: {},
     };
   },
   computed: {
@@ -64,7 +72,24 @@ export default defineComponent({
         alert(ex);
       }
     },
+    async findCities(query: string) {
+      // console.log(12, query);
+      const response = await citiesApi.getCitiesByName(query, this.lang);
+      console.log(response.data.suggestions);
+      const cities = response.data.suggestions.map(
+        (elem: any) => elem.value.split(" ")[1]
+      );
+
+      this.cities = new Set(cities);
+      // this.cities = response.data.suggestions.map((elem: any) =>
+      //   elem.value.data.city ? elem.value.data.city : ""
+      // );
+    },
+    async choiseCity(city: string) {
+      await this.find(city);
+    },
   },
+
   watch: {
     async lang() {
       await this.find(this.weather.place);
