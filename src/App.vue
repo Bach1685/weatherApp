@@ -24,11 +24,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { weatherApi } from "@/api/WeatherApi";
-import { mapper } from "@/mapper";
+import { mapper } from "@/mapper/WeatherApiMapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { translater } from "@/lang";
 import { citiesApi } from "./api/CitiesApi";
-// import cities from "@/db";
+import { citiesMapper } from "./mapper/CitiesApiMapper";
 export default defineComponent({
   data() {
     return {
@@ -67,20 +67,21 @@ export default defineComponent({
           query,
           this.lang
         );
-        this.weather = mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData);
+        this.weather.date = new Date();
+        this.weather.place += `, ${new Intl.DisplayNames(this.lang, {
+          type: "region",
+        }).of(weatherServerData.data.sys.country)}`;
       } catch (ex) {
         alert(ex);
       }
     },
     async findCities(query: string) {
-      const citiesServerData = await citiesApi.getCitiesByName(query, this.lang);
-      const cities = citiesServerData.data.suggestions
-        .map((elem: any) => {
-          return elem.data.city ? elem.data.city : "";
-        })
-        .filter((elem: any) => elem);
-      this.cities = new Set(cities);
-      console.log(this.cities);
+      const citiesServerData = await citiesApi.getCitiesByName(
+        query,
+        this.lang
+      );
+      this.cities = citiesMapper.map(citiesServerData);
     },
     async choiseCity(city: string) {
       await this.find(city);
@@ -101,7 +102,11 @@ export default defineComponent({
           position.coords.longitude,
           this.lang
         );
-        this.weather = mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData);
+        this.weather.date = new Date();
+        this.weather.place += `, ${new Intl.DisplayNames(this.lang, {
+          type: "region",
+        }).of(weatherServerData.data.sys.country)}`;
       },
       (error) => {
         console.error(error);

@@ -1,21 +1,18 @@
 import { AxiosResponse } from "axios";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
-import { Weather } from "@/businessLogic/Weather";
-import { IMapper } from "@/mapper/IMapper";
+import { IAxiosResponseMapper } from "@/mapper/IAxiosResponseMapper";
 
-export class Mapper implements IMapper {
-  map(axiosResponse: AxiosResponse, lang = "en"): Weather {
+export class WeatherApiMapper implements IAxiosResponseMapper {
+  map(axiosResponse: AxiosResponse): any {
     return {
-      place: `${axiosResponse.data.name}, ${new Intl.DisplayNames(lang, {
-        type: "region",
-      }).of(axiosResponse.data.sys.country)}`,
+      place: `${axiosResponse.data.name}`,
       status: this.getWeatherStatus(axiosResponse.data.weather[0].id),
       description: axiosResponse.data.weather[0].description,
       degC: Math.round(this.toCelsius(axiosResponse.data.main.temp)),
       degF: Math.round(this.toFahrenheit(axiosResponse.data.main.temp)),
-      date: new Date(),
     };
   }
+
   private getWeatherStatus(weatherId: number): WeatherStatus {
     if (weatherId < 700) {
       return WeatherStatus.Rain;
