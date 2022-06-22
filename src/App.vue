@@ -20,19 +20,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import SearchForm from "@/components/SearchForm.vue";
-import WeatherCard from "@/components/WeatherCard.vue";
 import { weatherApi } from "@/api/WeatherApi/WeatherApi";
-import { Mapper } from "@/businessLogic/Mapper";
+import { mapper } from "@/mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
-import LanguageSelectorForm from "@/components/LanguageSelectorForm.vue";
-import { Translater } from "./lang/Translater";
+import { translater } from "@/lang";
 export default defineComponent({
-  components: {
-    LanguageSelectorForm,
-    SearchForm,
-    WeatherCard,
-  },
   data() {
     return {
       weather: {
@@ -44,22 +36,20 @@ export default defineComponent({
         date: new Date(),
       },
       lang: "en",
-      translater: new Translater(),
     };
   },
   computed: {
     searchFormTranslates(): any {
-      const getTranstale = (): any => {
-        return {
-          search: this.translater.getTranslateById(1, this.lang),
-          enterTheCity: this.translater.getTranslateById(2, this.lang),
-        };
+      const searchId = 1;
+      const enterTheCityId = 2;
+      return {
+        search: translater.getTranslateById(searchId, this.lang),
+        enterTheCity: translater.getTranslateById(enterTheCityId, this.lang),
       };
-      return getTranstale();
     },
 
     languages(): string[] {
-      return this.translater.availableCountriesCodes;
+      return translater.availableCountriesCodes;
     },
   },
   methods: {
@@ -69,7 +59,7 @@ export default defineComponent({
           query,
           this.lang
         );
-        this.weather = Mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData, this.lang);
       } catch (ex) {
         alert(ex);
       }
@@ -89,7 +79,7 @@ export default defineComponent({
           position.coords.longitude,
           this.lang
         );
-        this.weather = Mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData, this.lang);
       },
       (error) => {
         console.error(error);

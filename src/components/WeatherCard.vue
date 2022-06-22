@@ -28,6 +28,7 @@
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { defineComponent } from "vue";
 export default defineComponent({
+  name: "weather-card",
   props: {
     weather: {
       type: Object,

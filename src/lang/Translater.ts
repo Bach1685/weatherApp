@@ -1,9 +1,11 @@
-export class Translater {
+import { ITranslater } from "./ITranslater";
+export class Translater implements ITranslater {
   get availableCountriesCodes(): string[] {
     return this.expressions[0].translations.map(
       (translation) => translation.countryCode
     );
   }
+
   private expressions = [
     {
       id: 1,
