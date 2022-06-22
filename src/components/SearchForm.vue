@@ -1,24 +1,26 @@
 <template>
   <form @submit.prevent>
     <div class="search-form">
-      <input
-        class="input"
-        v-model="query"
-        :placeholder="`${translates.enterTheCity}...`"
-        @keypress="keypress"
-      />
+      <div class="input-tips-list">
+        <input
+          class="input"
+          v-model="query"
+          :placeholder="`${translates.enterTheCity}...`"
+          @keypress="keypress"
+        />
+        <ul class="list">
+          <li
+            class="list__elem"
+            @click="choiseCity(city)"
+            v-for="city of cities"
+            :key="city"
+          >
+            {{ city }}
+          </li>
+        </ul>
+      </div>
       <button class="btn" @click="find">{{ translates.search }}</button>
     </div>
-    <ul class="list">
-      <li
-        class="list__elem"
-        @click="choiseCity(city)"
-        v-for="city of cities"
-        :key="city"
-      >
-        {{ city }}
-      </li>
-    </ul>
   </form>
 </template>
 
@@ -67,19 +69,22 @@ export default defineComponent({
 
 .list__elem {
   font-family: "Inter";
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.5;
-  width: 200px;
+  max-width: 200px;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
 }
 .list__elem:hover {
-  /* color: yellow; */
   cursor: pointer;
-  background: rgb(185, 175, 175);
+  background-color: #555555;
+  color: white;
 }
 .input {
   font-size: 20px;
   height: 40px;
-  width: 200px;
+  max-width: 200px;
   font-family: "Inter";
 }
 .btn {
@@ -93,6 +98,7 @@ export default defineComponent({
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 20px;
+  height: 70px;
 }
 
 .btn:hover {
@@ -101,5 +107,6 @@ export default defineComponent({
 }
 .search-form {
   max-width: 350px;
+  display: flex;
 }
 </style>

@@ -73,17 +73,14 @@ export default defineComponent({
       }
     },
     async findCities(query: string) {
-      // console.log(12, query);
-      const response = await citiesApi.getCitiesByName(query, this.lang);
-      console.log(response.data.suggestions);
-      const cities = response.data.suggestions.map(
-        (elem: any) => elem.value.split(" ")[1]
-      );
-
+      const citiesServerData = await citiesApi.getCitiesByName(query, this.lang);
+      const cities = citiesServerData.data.suggestions
+        .map((elem: any) => {
+          return elem.data.city ? elem.data.city : "";
+        })
+        .filter((elem: any) => elem);
       this.cities = new Set(cities);
-      // this.cities = response.data.suggestions.map((elem: any) =>
-      //   elem.value.data.city ? elem.value.data.city : ""
-      // );
+      console.log(this.cities);
     },
     async choiseCity(city: string) {
       await this.find(city);
