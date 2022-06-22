@@ -1,6 +1,6 @@
 import instance from "../instance";
 import { IWeatherApi } from "./IWeatherApi";
-class WeatherApi implements IWeatherApi {
+export class WeatherApi implements IWeatherApi {
   private key = "1f9bacfa4612bda68445c63f8d79f738";
 
   async getWeatherByPlace(place: string, lang = "ru"): Promise<any> {
@@ -37,5 +37,3 @@ class WeatherApi implements IWeatherApi {
     }
   }
 }
-
-export const weatherApi = new WeatherApi();

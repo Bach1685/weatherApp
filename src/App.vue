@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { weatherApi } from "@/api/WeatherApi/WeatherApi";
+import { weatherApi } from "@/api/WeatherApi";
 import { mapper } from "@/mapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { translater } from "@/lang";
