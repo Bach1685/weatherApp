@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import lodash from "lodash";
 
 export default defineComponent({
   name: "search-form",
@@ -44,9 +43,6 @@ export default defineComponent({
     return {
       query: "",
       isSendQuery: false,
-      debounce: lodash.debounce(() => {
-        this.$emit("cityWordPress", this.query);
-      }, 200),
     };
   },
   methods: {
@@ -59,15 +55,11 @@ export default defineComponent({
     },
     keypress(event: any) {
       this.isSendQuery = false;
+      this.$emit("cityWordPress", this.query);
     },
     choiseCity(city: string) {
       this.query = city;
       this.$emit("choiseCity", city);
-    },
-  },
-  watch: {
-    query() {
-      this.debounce();
     },
   },
 });
