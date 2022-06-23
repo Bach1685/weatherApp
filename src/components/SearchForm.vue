@@ -7,6 +7,7 @@
           v-model="query"
           :placeholder="`${translates.enterTheCity}...`"
           @keypress="keypress"
+          @keydown="keydown"
         />
         <ul class="list">
           <li
@@ -47,7 +48,11 @@ export default defineComponent({
     find() {
       this.$emit("find", this.query);
     },
-    keypress() {
+    keypress(event: Event) {
+      this.$emit("keypress", this.query);
+    },
+    keydown(event: any) {
+      console.log(event.keyCode);
       this.$emit("keypress", this.query);
     },
     choiseCity(city: string) {
@@ -67,12 +72,16 @@ export default defineComponent({
   font-weight: normal;
 }
 
+.list {
+  position: absolute;
+}
+
 .list__elem {
   font-family: "Inter";
   font-size: 20px;
   line-height: 1.5;
   max-width: 200px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: white;
   color: black;
 }

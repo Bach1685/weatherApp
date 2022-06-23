@@ -1,22 +1,22 @@
 <template>
-  <div class="main">
+  <div class="app">
     <language-selector-form
       v-model="lang"
       :options="languages"
-      class="main__language-selector-form"
+      class="app__language-selector-form"
     />
     <search-form
       @find="find"
       :translates="searchFormTranslates"
       :cities="cities"
-      class="main__search-form"
+      class="app__search-form"
       @keypress="findCities"
       @choiseCity="choiseCity"
     ></search-form>
     <weather-card
       :weather="weather"
       :lang="lang"
-      class="main__wrapper"
+      class="app__wrapper"
     ></weather-card>
   </div>
 </template>
@@ -42,7 +42,6 @@ export default defineComponent({
       },
       query: "",
       lang: "en",
-      options: HTMLOptionsCollection,
       cities: {},
     };
   },
@@ -117,21 +116,24 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.main {
+.app {
   margin: 100px auto;
   max-width: 652px;
 }
-.main__wrapper {
+.app__wrapper {
   position: relative;
+  z-index: -1;
 }
-.main__search-form {
+.app__search-form {
+  position: relative;
   margin: 20px auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  z-index: 2;
 }
 
-.main__language-selector-form {
+.app__language-selector-form {
   float: right;
 }
 </style>
