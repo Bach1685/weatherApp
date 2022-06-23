@@ -6,15 +6,15 @@
       class="app__language-selector-form"
     />
     <search-form
-      @find="find"
+      @find="findWeather"
       :translates="searchFormTranslates"
       :cities="cities"
       class="app__search-form"
       @cityWordPress="findCities"
-      @choiseCity="choiseCity"
+      @choiseCity="findWeather"
     ></search-form>
     <weather-card
-      :weather="weather"
+      :weather="weatherData"
       :lang="lang"
       class="app__wrapper"
     ></weather-card>
@@ -23,94 +23,29 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { weatherApi } from "@/api/WeatherApi";
-import { mapper } from "@/mapper/WeatherApiMapper";
-import { translater } from "@/lang";
-import { citiesApi } from "./api/CitiesApi";
-import { citiesMapper } from "./mapper/CitiesApiMapper";
-import lodash from "lodash";
-import { weather } from "./businessLogic/Weather";
+import { useTranslates } from "./hooks/useTranslates";
+import { useWeather } from "./hooks/useWeather";
+import { useCities } from "./hooks/useCities";
 
 export default defineComponent({
-  data() {
-    return {
-      weather: weather,
-      lang: "en",
-      cities: [],
-      debounce: lodash.debounce(async (query: string, lang: string) => {
-        console.log("send");
-        const citiesServerData = await citiesApi.getCitiesByName(query, lang);
-        this.cities = citiesMapper.map(citiesServerData);
-      }, 200),
-    };
-  },
-  computed: {
-    searchFormTranslates(): any {
-      const searchId = 1;
-      const enterTheCityId = 2;
-      return {
-        search: translater.getTranslateById(searchId, this.lang),
-        enterTheCity: translater.getTranslateById(enterTheCityId, this.lang),
-      };
-    },
-
-    languages(): string[] {
-      return translater.availableCountriesCodes;
-    },
-  },
-
-  methods: {
-    async find(query: string) {
-      this.cities = [];
-      try {
-        const weatherServerData = await weatherApi.getWeatherByPlace(
-          query,
-          this.lang
-        );
-        this.weather = mapper.map(weatherServerData);
-        this.weather.date = new Date();
-        this.weather.place += `, ${new Intl.DisplayNames(this.lang, {
-          type: "region",
-        }).of(weatherServerData.data.sys.country)}`;
-      } catch (ex) {
-        alert(ex);
-      }
-    },
-    async findCities(query: string) {
-      this.debounce(query, this.lang);
-    },
-    async choiseCity(city: string) {
-      await this.find(city);
-    },
-    clearCitiesTip() {
-      this.cities = [];
-    },
-  },
-
-  watch: {
-    async lang() {
-      await this.find(this.weather.place);
-    },
-  },
-
-  mounted() {
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const weatherServerData = await weatherApi.getWeatherByCoordinates(
-          position.coords.latitude,
-          position.coords.longitude,
-          this.lang
-        );
-        this.weather = mapper.map(weatherServerData);
-        this.weather.date = new Date();
-        this.weather.place += `, ${new Intl.DisplayNames(this.lang, {
-          type: "region",
-        }).of(weatherServerData.data.sys.country)}`;
-      },
-      (error) => {
-        console.error(error);
-      }
+  setup() {
+    const { lang, languages, searchFormTranslates } = useTranslates();
+    const { cities, debounce, findCities, clearCitiesTip } = useCities(
+      lang.value
     );
+    const { weatherData, findWeather } = useWeather(lang.value, cities.value);
+
+    return {
+      lang,
+      languages,
+      searchFormTranslates,
+      cities,
+      debounce,
+      findCities,
+      clearCitiesTip,
+      weatherData,
+      findWeather,
+    };
   },
 });
 </script>
