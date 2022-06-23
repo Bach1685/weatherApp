@@ -25,24 +25,16 @@
 import { defineComponent } from "vue";
 import { weatherApi } from "@/api/WeatherApi";
 import { mapper } from "@/mapper/WeatherApiMapper";
-import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { translater } from "@/lang";
 import { citiesApi } from "./api/CitiesApi";
 import { citiesMapper } from "./mapper/CitiesApiMapper";
 import lodash from "lodash";
+import { weather } from "./businessLogic/Weather";
 
 export default defineComponent({
   data() {
     return {
-      weather: {
-        place: "",
-        status: WeatherStatus.Clear,
-        description: "",
-        degC: 0,
-        degF: 0,
-        date: new Date(),
-      },
-      query: "",
+      weather: weather,
       lang: "en",
       cities: [],
       debounce: lodash.debounce(async (query: string, lang: string) => {
