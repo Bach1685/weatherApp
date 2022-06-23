@@ -1,8 +1,8 @@
 import axios from "axios";
-const instance = axios.create({
+const weatherInstance = axios.create({
   baseURL: "http://api.openweathermap.org",
   headers: {
     accept: "aplication/json",
   },
 });
-export default instance;
+export default weatherInstance;

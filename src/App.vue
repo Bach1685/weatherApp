@@ -1,19 +1,22 @@
 <template>
-  <div class="main">
+  <div class="app" @click="clearCitiesTip">
     <language-selector-form
       v-model="lang"
       :options="languages"
-      class="main__language-selector-form"
+      class="app__language-selector-form"
     />
     <search-form
       @find="find"
       :translates="searchFormTranslates"
-      class="main__search-form"
+      :cities="cities"
+      class="app__search-form"
+      @keypress="findCities"
+      @choiseCity="choiseCity"
     ></search-form>
     <weather-card
       :weather="weather"
       :lang="lang"
-      class="main__wrapper"
+      class="app__wrapper"
     ></weather-card>
   </div>
 </template>
@@ -21,9 +24,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { weatherApi } from "@/api/WeatherApi";
-import { mapper } from "@/mapper";
+import { mapper } from "@/mapper/WeatherApiMapper";
 import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { translater } from "@/lang";
+import { citiesApi } from "./api/CitiesApi";
+import { citiesMapper } from "./mapper/CitiesApiMapper";
 export default defineComponent({
   data() {
     return {
@@ -35,7 +40,9 @@ export default defineComponent({
         degF: 0,
         date: new Date(),
       },
+      query: "",
       lang: "en",
+      cities: [],
     };
   },
   computed: {
@@ -54,17 +61,36 @@ export default defineComponent({
   },
   methods: {
     async find(query: string) {
+      this.cities = [];
       try {
         const weatherServerData = await weatherApi.getWeatherByPlace(
           query,
           this.lang
         );
-        this.weather = mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData);
+        this.weather.date = new Date();
+        this.weather.place += `, ${new Intl.DisplayNames(this.lang, {
+          type: "region",
+        }).of(weatherServerData.data.sys.country)}`;
       } catch (ex) {
         alert(ex);
       }
     },
+    async findCities(query: string) {
+      const citiesServerData = await citiesApi.getCitiesByName(
+        query,
+        this.lang
+      );
+      this.cities = citiesMapper.map(citiesServerData);
+    },
+    async choiseCity(city: string) {
+      await this.find(city);
+    },
+    clearCitiesTip() {
+      this.cities = [];
+    },
   },
+
   watch: {
     async lang() {
       await this.find(this.weather.place);
@@ -79,7 +105,11 @@ export default defineComponent({
           position.coords.longitude,
           this.lang
         );
-        this.weather = mapper.map(weatherServerData, this.lang);
+        this.weather = mapper.map(weatherServerData);
+        this.weather.date = new Date();
+        this.weather.place += `, ${new Intl.DisplayNames(this.lang, {
+          type: "region",
+        }).of(weatherServerData.data.sys.country)}`;
       },
       (error) => {
         console.error(error);
@@ -90,21 +120,24 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.main {
+.app {
   margin: 100px auto;
   max-width: 652px;
 }
-.main__wrapper {
+.app__wrapper {
   position: relative;
+  z-index: -1;
 }
-.main__search-form {
+.app__search-form {
+  position: relative;
   margin: 20px auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  z-index: 2;
 }
 
-.main__language-selector-form {
+.app__language-selector-form {
   float: right;
 }
 </style>

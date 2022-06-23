@@ -1,4 +1,4 @@
-import instance from "../instance";
+import instance from "../weatherInstance";
 import { IWeatherApi } from "./IWeatherApi";
 export class WeatherApi implements IWeatherApi {
   private key = "1f9bacfa4612bda68445c63f8d79f738";
