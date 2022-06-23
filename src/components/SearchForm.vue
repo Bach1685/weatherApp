@@ -5,10 +5,9 @@
         <input
           class="input"
           :class="{ danger: isSendQuery }"
+          @keypress="keypress"
           v-model="query"
           :placeholder="`${translates.enterTheCity}...`"
-          @keypress="keypress"
-          @keydown="keydown"
         />
         <ul class="list">
           <li
@@ -28,6 +27,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import lodash from "lodash";
 
 export default defineComponent({
   name: "search-form",
@@ -44,6 +44,9 @@ export default defineComponent({
     return {
       query: "",
       isSendQuery: false,
+      debounce: lodash.debounce(() => {
+        this.$emit("keypress", this.query);
+      }, 200),
     };
   },
   methods: {
@@ -54,21 +57,22 @@ export default defineComponent({
       }
       this.$emit("find", this.query);
     },
-    keypress(event: Event) {
+    keypress(event: any) {
       this.isSendQuery = false;
-      this.$emit("keypress", this.query);
-    },
-    keydown(event: any) {
-      console.log(event.keyCode);
-      this.$emit("keypress", this.query);
     },
     choiseCity(city: string) {
       this.query = city;
       this.$emit("choiseCity", city);
     },
   },
+  watch: {
+    query() {
+      this.debounce();
+    },
+  },
 });
 </script>
+
 
 <style>
 @font-face {
