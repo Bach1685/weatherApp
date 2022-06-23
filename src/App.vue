@@ -42,7 +42,7 @@ export default defineComponent({
       },
       query: "",
       lang: "en",
-      cities: {},
+      cities: [],
     };
   },
   computed: {
@@ -61,6 +61,7 @@ export default defineComponent({
   },
   methods: {
     async find(query: string) {
+      this.cities = [];
       try {
         const weatherServerData = await weatherApi.getWeatherByPlace(
           query,
