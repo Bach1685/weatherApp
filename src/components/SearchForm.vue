@@ -1,9 +1,10 @@
 <template>
   <form @submit.prevent>
     <div class="search-form">
-      <div class="input-tips-list">
+      <div class="input-and-tips-list">
         <input
           class="input"
+          :class="{ danger: isSendQuery }"
           v-model="query"
           :placeholder="`${translates.enterTheCity}...`"
           @keypress="keypress"
@@ -42,13 +43,19 @@ export default defineComponent({
   data() {
     return {
       query: "",
+      isSendQuery: false,
     };
   },
   methods: {
     find() {
+      if (this.query === "") {
+        this.isSendQuery = true;
+        return;
+      }
       this.$emit("find", this.query);
     },
     keypress(event: Event) {
+      this.isSendQuery = false;
       this.$emit("keypress", this.query);
     },
     keydown(event: any) {
@@ -70,6 +77,11 @@ export default defineComponent({
     format("truetype");
   font-style: normal;
   font-weight: normal;
+}
+
+.danger {
+  border: 5px rgb(241, 85, 85) solid;
+  border-radius: 10px;
 }
 
 .list {
@@ -95,27 +107,40 @@ export default defineComponent({
   height: 40px;
   max-width: 200px;
   font-family: "Inter";
+  margin: auto;
+  display: block;
 }
 .btn {
   font-family: "Inter";
   background-color: white;
   border: 2px solid #555555;
   color: black;
-  padding: 16px 32px;
+  padding: 8px 32px;
   text-align: center;
   font-size: 16px;
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 20px;
-  height: 70px;
+  height: 40px;
+  margin: auto;
+}
+
+@media (max-width: 390px) {
+  .btn {
+    position: relative;
+    left: 70%;
+    margin: 0;
+  }
 }
 
 .btn:hover {
   background-color: #555555;
   color: white;
 }
+
 .search-form {
   max-width: 350px;
   display: flex;
+  flex-wrap: wrap;
 }
 </style>
