@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" @click="clearCitiesTip">
     <language-selector-form
       v-model="lang"
       :options="languages"
@@ -85,6 +85,9 @@ export default defineComponent({
     },
     async choiseCity(city: string) {
       await this.find(city);
+    },
+    clearCitiesTip() {
+      this.cities = [];
     },
   },
 
