@@ -26,7 +26,6 @@ export default defineComponent({
       this.$emit("update:modelValue", event.target.value);
     },
   },
-  computed: {},
 });
 </script>
 
