@@ -10,7 +10,7 @@
       :translates="searchFormTranslates"
       :cities="cities"
       class="app__search-form"
-      @keypress="findCities"
+      @cityWordPress="findCities"
       @choiseCity="choiseCity"
     ></search-form>
     <weather-card
@@ -29,6 +29,8 @@ import { WeatherStatus } from "@/businessLogic/enum/WeatherStatus";
 import { translater } from "@/lang";
 import { citiesApi } from "./api/CitiesApi";
 import { citiesMapper } from "./mapper/CitiesApiMapper";
+import lodash from "lodash";
+
 export default defineComponent({
   data() {
     return {
@@ -43,6 +45,11 @@ export default defineComponent({
       query: "",
       lang: "en",
       cities: [],
+      debounce: lodash.debounce(async (query: string, lang: string) => {
+        console.log("send");
+        const citiesServerData = await citiesApi.getCitiesByName(query, lang);
+        this.cities = citiesMapper.map(citiesServerData);
+      }, 200),
     };
   },
   computed: {
@@ -59,6 +66,7 @@ export default defineComponent({
       return translater.availableCountriesCodes;
     },
   },
+
   methods: {
     async find(query: string) {
       this.cities = [];
@@ -77,11 +85,7 @@ export default defineComponent({
       }
     },
     async findCities(query: string) {
-      const citiesServerData = await citiesApi.getCitiesByName(
-        query,
-        this.lang
-      );
-      this.cities = citiesMapper.map(citiesServerData);
+      this.debounce(query, this.lang);
     },
     async choiseCity(city: string) {
       await this.find(city);

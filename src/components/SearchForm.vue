@@ -5,10 +5,9 @@
         <input
           class="input"
           :class="{ danger: isSendQuery }"
+          @keypress="keypress"
           v-model="query"
           :placeholder="`${translates.enterTheCity}...`"
-          @keypress="keypress"
-          @keydown="keydown"
         />
         <ul class="list">
           <li
@@ -54,13 +53,9 @@ export default defineComponent({
       }
       this.$emit("find", this.query);
     },
-    keypress(event: Event) {
+    keypress(event: any) {
       this.isSendQuery = false;
-      this.$emit("keypress", this.query);
-    },
-    keydown(event: any) {
-      console.log(event.keyCode);
-      this.$emit("keypress", this.query);
+      this.$emit("cityWordPress", this.query);
     },
     choiseCity(city: string) {
       this.query = city;
@@ -69,6 +64,7 @@ export default defineComponent({
   },
 });
 </script>
+
 
 <style>
 @font-face {
