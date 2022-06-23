@@ -56,7 +56,7 @@ export default defineComponent({
       this.$emit("keypress", this.query);
     },
     choiseCity(city: string) {
-      console.log(city);
+      this.query = city;
       this.$emit("choiseCity", city);
     },
   },
