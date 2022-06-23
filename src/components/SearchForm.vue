@@ -45,7 +45,7 @@ export default defineComponent({
       query: "",
       isSendQuery: false,
       debounce: lodash.debounce(() => {
-        this.$emit("keypress", this.query);
+        this.$emit("cityWordPress", this.query);
       }, 200),
     };
   },

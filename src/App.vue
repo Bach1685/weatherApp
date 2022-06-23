@@ -10,7 +10,7 @@
       :translates="searchFormTranslates"
       :cities="cities"
       class="app__search-form"
-      @keypress="findCities"
+      @cityWordPress="findCities"
       @choiseCity="choiseCity"
     ></search-form>
     <weather-card
@@ -77,6 +77,7 @@ export default defineComponent({
       }
     },
     async findCities(query: string) {
+      console.log("send");
       const citiesServerData = await citiesApi.getCitiesByName(
         query,
         this.lang
