@@ -4,7 +4,7 @@
       <div class="input-and-tips-list">
         <input
           class="input"
-          :class="{ danger: isSendQuery }"
+          :class="{ danger: isSendEmptyQuery }"
           @keypress="keypress"
           v-model="query"
           :placeholder="`${translates.enterTheCity}...`"
@@ -42,19 +42,19 @@ export default defineComponent({
   data() {
     return {
       query: "",
-      isSendQuery: false,
+      isSendEmptyQuery: false,
     };
   },
   methods: {
     find() {
       if (this.query === "") {
-        this.isSendQuery = true;
+        this.isSendEmptyQuery = true;
         return;
       }
       this.$emit("find", this.query);
     },
     keypress(event: any) {
-      this.isSendQuery = false;
+      this.isSendEmptyQuery = false;
       this.$emit("cityWordPress", this.query);
     },
     choiseCity(city: string) {
