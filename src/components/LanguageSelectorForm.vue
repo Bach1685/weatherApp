@@ -17,7 +17,7 @@ export default defineComponent({
       type: String,
     },
     options: {
-      type: Array<any>(),
+      // type: any,
       default: () => [],
     },
   },
