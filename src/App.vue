@@ -33,7 +33,7 @@ export default defineComponent({
     const { cities, debounce, findCities, clearCitiesTip } = useCities(
       lang.value
     );
-    const { weatherData, findWeather } = useWeather(lang.value, cities.value);
+    const { weatherData, findWeather } = useWeather(lang, cities.value);
 
     return {
       lang,

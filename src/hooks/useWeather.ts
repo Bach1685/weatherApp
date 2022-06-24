@@ -2,9 +2,8 @@ import { weatherApi } from "@/api/WeatherApi";
 import { mapper } from "@/mapper/WeatherApiMapper";
 import { onMounted, ref, watch } from "vue";
 import { weather } from "./../businessLogic/Weather";
-export function useWeather(_lang: string, cities: string[]) {
+export function useWeather(lang: any, cities: string[]) {
   const weatherData = ref(weather);
-  const lang = ref(_lang);
 
   const findWeather = async (query: string) => {
     cities = [];
@@ -44,12 +43,9 @@ export function useWeather(_lang: string, cities: string[]) {
 
   onMounted(finding);
 
-  watch(
-    () => lang.value,
-    async () => {
-      await findWeather(weatherData.value.place);
-    }
-  );
+  watch(lang, async () => {
+    await findWeather(weatherData.value.place);
+  });
 
   return { weatherData, findWeather };
 }

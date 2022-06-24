@@ -6,6 +6,7 @@ export function useTranslates() {
   const lang = ref("en");
 
   const languages = computed((): string[] => {
+    console.log(translater.availableCountriesCodes);
     return translater.availableCountriesCodes;
   });
 
