@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from "vue";
 import { weather } from "./../businessLogic/Weather";
 export function useWeather(lang: any, cities: string[]) {
   const weatherData = ref(weather);
-// test
+
   const findWeather = async (query: string) => {
     cities = [];
     try {
