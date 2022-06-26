@@ -8,8 +8,8 @@ export class CitiesApiMapper implements IAxiosResponseMapper {
         return elem.data.city ? elem.data.city : "";
       })
       .filter((elem: any) => elem);
-    const uniqCities = new Set<string>(cities);
+    const uniqueCities = new Set<string>(cities);
 
-    return uniqCities;
+    return uniqueCities;
   }
 }

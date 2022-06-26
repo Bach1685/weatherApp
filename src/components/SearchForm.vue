@@ -1,25 +1,11 @@
 <template>
   <form @submit.prevent>
     <div class="search-form">
-      <div class="input-and-tips-list">
-        <input
-          class="input"
-          :class="{ danger: isSendEmptyQuery }"
-          @keypress="keypress"
-          v-model="query"
-          :placeholder="`${translates.enterTheCity}...`"
-        />
-        <ul class="list">
-          <li
-            class="list__elem"
-            @click="choiseCity(city)"
-            v-for="city of cities"
-            :key="city"
-          >
-            {{ city }}
-          </li>
-        </ul>
-      </div>
+      <search-string-with-tips
+      :placeholderTranslate="translates.enterTheCity"
+      :tips="cities"
+      @enterQuery="enterQuery"
+      v-model:value="query"/>
       <button class="btn" @click="find">{{ translates.search }}</button>
     </div>
   </form>
@@ -47,19 +33,21 @@ export default defineComponent({
   },
   methods: {
     find() {
+      console.log(this.query);
+
       if (this.query === "") {
         this.isSendEmptyQuery = true;
         return;
       }
       this.$emit("find", this.query);
     },
-    keypress(event: any) {
+    enterQuery(query: string) {
       this.isSendEmptyQuery = false;
-      this.$emit("cityWordPress", this.query);
+      this.$emit("enterQuery", query);
     },
-    choiseCity(city: string) {
-      this.query = city;
-      this.$emit("choiseCity", city);
+    choosePlace(place: string) {
+      this.query = place;
+      this.$emit("choiseCity", place);
     },
   },
 });

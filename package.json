@@ -11,6 +11,7 @@
     "@types/lodash": "^4.14.182",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "lodash": "^4.17.21",
     "vue": "^3.2.13"
   },
   "devDependencies": {
@@ -24,5 +25,17 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "typescript": "~4.5.5"
-  }
+  },
+  "description": "```\r npm install\r ```",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bach1685/weatherApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bach1685/weatherApp/issues"
+  },
+  "homepage": "https://github.com/Bach1685/weatherApp#readme"
 }

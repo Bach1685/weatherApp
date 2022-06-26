@@ -10,7 +10,7 @@
       :translates="searchFormTranslates"
       :cities="cities"
       class="app__search-form"
-      @cityWordPress="findCities"
+      @enterQuery="findCities"
       @choiseCity="findWeather"
     ></search-form>
     <weather-card
