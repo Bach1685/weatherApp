@@ -1,8 +1,10 @@
+import { translater } from "@/lang";
+
 export const searchStringModule = {
   state: () => {
     return {
       query: "",
-      placeholder: "привет",
+      placeholder: translater.getTranslateById(1, "en"),
     };
   },
   getters: {
@@ -10,8 +12,6 @@ export const searchStringModule = {
       return state.query;
     },
     getPlaceholder(state: any) {
-      console.log(112);
-
       return state.placeholder;
     },
   },

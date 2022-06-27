@@ -8,6 +8,8 @@
 </template>
 
 <script lang="ts">
+import { translater } from "@/lang";
+import { store } from "@/store";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -23,6 +25,10 @@ export default defineComponent({
   },
   methods: {
     changeOption(event: any) {
+      store.commit(
+        "setPlaceholder",
+        translater.getTranslateById(1, event.target.value)
+      );
       this.$emit("update:modelValue", event.target.value);
     },
   },

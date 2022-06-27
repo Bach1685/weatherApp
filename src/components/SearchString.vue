@@ -10,6 +10,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapMutations, mapState } from "vuex";
+import { store } from "@/store";
 
 export default defineComponent({
   name: "search-string",
@@ -26,7 +27,7 @@ export default defineComponent({
   },
   computed: {
     // ...mapState({placeholder: (state: any) => state.placeholder,}),
-    ...mapGetters({ placeholder: "searchString/getPlaceholder" }),
+    ...mapGetters({ placeholder: "getPlaceholder" }),
   },
 });
 </script>
