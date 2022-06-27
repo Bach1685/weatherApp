@@ -1,12 +1,6 @@
 <template>
    <div class="search-string-with-tips">
-        <input
-          class="search-string"
-          :class="{ danger: isSendEmptyQuery }"
-          @keypress="enterQuery"
-          :placeholder="`${placeholderTranslate}...`"
-          :value="query"
-        />
+       <search-string/>
         <ul class="tips">
           <li
             class="tip"
