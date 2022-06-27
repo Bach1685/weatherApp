@@ -1,24 +1,19 @@
 <template>
-   <div class="search-string-with-tips">
-       <search-string/>
-        <ul class="tips">
-          <li
-            class="tip"
-            @click="choosePlace(tip)"
-            v-for="tip of tips"
-            :key="tip"
-          >
-            {{ tip }}
-          </li>
-        </ul>
-      </div>
+  <div class="search-string-with-tips">
+    <search-string :class="{ danger: isSendEmptyQuery }" />
+    <ul class="tips">
+      <li class="tip" @click="choosePlace(tip)" v-for="tip of tips" :key="tip">
+        {{ tip }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-name: "search-string-with-tips",
+  name: "search-string-with-tips",
   props: {
     placeholderTranslate: {
       type: String,
@@ -33,7 +28,7 @@ name: "search-string-with-tips",
       isSendEmptyQuery: false,
     };
   },
-  methods:{
+  methods: {
     enterQuery(event: any) {
       this.isSendEmptyQuery = false;
       this.$emit("enterQuery", this.query);
@@ -42,12 +37,11 @@ name: "search-string-with-tips",
       this.query = place;
       this.$emit("choosePlace", place);
     },
-  }
-})
+  },
+});
 </script>
 
 <style scoped>
-
 @font-face {
   font-family: "Inter";
   src: url("@/assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf")
