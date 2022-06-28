@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import { store } from "@/store";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -34,13 +35,13 @@ export default defineComponent({
   },
   methods: {
     find() {
-      console.log(this.query);
+      store.dispatch('find', 'en');
 
       if (this.query === "") {
         this.isSendEmptyQuery = true;
         return;
       }
-      this.$emit("find", this.query);
+      // this.$emit("find");
     },
     enterQuery(query: string) {
       this.isSendEmptyQuery = false;

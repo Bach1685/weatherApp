@@ -21,7 +21,7 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations({
-      enterQuery: "searchString/setQuery",
+      enterQuery: "setPlace",
       // newQuery: this.query,
     }),
   },
