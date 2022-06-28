@@ -1,3 +1,4 @@
+import { Expressions } from "./Expressions";
 import { ITranslater } from "./ITranslater";
 export class Translater implements ITranslater {
   get availableCountriesCodes(): string[] {
@@ -8,7 +9,7 @@ export class Translater implements ITranslater {
 
   private expressions = [
     {
-      id: 1,
+      id: Expressions.Search,
       translations: [
         {
           countryCode: "ru",
@@ -21,7 +22,7 @@ export class Translater implements ITranslater {
       ],
     },
     {
-      id: 2,
+      id: Expressions.EnterTheCity,
       translations: [
         {
           countryCode: "ru",

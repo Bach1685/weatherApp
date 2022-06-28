@@ -1,10 +1,11 @@
+import { Expressions } from "../lang/Expressions";
 import { translater } from "@/lang";
 
 export const searchStringModule = {
   state: () => {
     return {
       query: "",
-      placeholder: translater.getTranslateById(1, "en"),
+      placeholder: translater.getTranslateById(Expressions.EnterTheCity, "en"),
     };
   },
   getters: {

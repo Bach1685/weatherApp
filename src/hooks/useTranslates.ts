@@ -1,3 +1,4 @@
+import { Expressions } from "../lang/Expressions";
 import { translater } from "@/lang";
 import { computed } from "@vue/reactivity";
 import { ref } from "vue";
@@ -10,11 +11,12 @@ export function useTranslates() {
   });
 
   const searchFormTranslates = computed((): any => {
-    const searchId = 1;
-    const enterTheCityId = 2;
     return {
-      search: translater.getTranslateById(searchId, lang.value),
-      enterTheCity: translater.getTranslateById(enterTheCityId, lang.value),
+      search: translater.getTranslateById(Expressions.Search, lang.value),
+      enterTheCity: translater.getTranslateById(
+        Expressions.EnterTheCity,
+        lang.value
+      ),
     };
   });
 

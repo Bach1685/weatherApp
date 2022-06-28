@@ -2,10 +2,11 @@
   <form @submit.prevent>
     <div class="search-form">
       <search-string-with-tips
-      :placeholderTranslate="translates.enterTheCity"
-      :tips="cities"
-      @enterQuery="enterQuery"
-      v-model:value="query"/>
+        :placeholderTranslate="translates.enterTheCity"
+        :tips="cities"
+        @enterQuery="enterQuery"
+        v-model:value="query"
+      />
       <button class="btn" @click="find">{{ translates.search }}</button>
     </div>
   </form>
