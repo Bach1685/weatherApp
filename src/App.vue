@@ -1,5 +1,5 @@
 <template>
-  <div class="app" @click="clearCitiesTip">
+  <div class="app" @click="clearTips">
     <language-selector-form
       v-model="lang"
       :options="languages"
@@ -8,9 +8,9 @@
     <search-form
       @find="findWeather"
       :translates="searchFormTranslates"
-      :cities="cities"
+      :tips="tips"
       class="app__search-form"
-      @enterQuery="findCities"
+      @enterQuery="findTips"
       @choiseCity="findWeather"
     ></search-form>
     <weather-card
@@ -25,24 +25,22 @@
 import { defineComponent } from "vue";
 import { useTranslates } from "./hooks/useTranslates";
 import { useWeather } from "./hooks/useWeather";
-import { useCities } from "./hooks/useCities";
+import { useTips } from "./hooks/useTips";
 
 export default defineComponent({
   setup() {
     const { lang, languages, searchFormTranslates } = useTranslates();
-    const { cities, debounce, findCities, clearCitiesTip } = useCities(
-      lang.value
-    );
-    const { weatherData, findWeather } = useWeather(lang, cities.value);
+    const { tips, debounce, findTips, clearTips } = useTips(lang.value);
+    const { weatherData, findWeather } = useWeather(lang, tips.value);
 
     return {
       lang,
       languages,
       searchFormTranslates,
-      cities,
+      tips,
       debounce,
-      findCities,
-      clearCitiesTip,
+      findTips,
+      clearTips,
       weatherData,
       findWeather,
     };

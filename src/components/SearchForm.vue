@@ -3,7 +3,7 @@
     <div class="search-form">
       <search-string-with-tips
         :placeholderTranslate="translates.enterTheCity"
-        :tips="cities"
+        :tips="tips"
         @enterQuery="enterQuery"
         v-model:value="query"
       />
@@ -22,7 +22,7 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    cities: {
+    tips: {
       type: Object,
     },
   },
