@@ -17,8 +17,8 @@ export const searchStringModule = {
     },
   },
   mutations: {
-    setQuery(state: any, newQuery: string) {
-      state.query = newQuery;
+    setQuery(state: any, event: any) {
+      state.query = event.target.value;
     },
     setPlaceholder(state: any, newPlaceholder: string) {
       state.placeholder = newPlaceholder;

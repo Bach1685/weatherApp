@@ -3,30 +3,19 @@
     class="search-string"
     @keypress="enterQuery"
     :placeholder="`${placeholder}...`"
-    :value="query"
   />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapGetters, mapMutations, mapState } from "vuex";
-import { store } from "@/store";
+import { mapGetters, mapMutations } from "vuex";
 
 export default defineComponent({
   name: "search-string",
-  data() {
-    return {
-      query: "",
-    };
-  },
   methods: {
-    ...mapMutations({
-      enterQuery: "searchString/setQuery",
-      // newQuery: this.query,
-    }),
+    ...mapMutations({ enterQuery: "setQuery" }),
   },
   computed: {
-    // ...mapState({placeholder: (state: any) => state.placeholder,}),
     ...mapGetters({ placeholder: "getPlaceholder" }),
   },
 });
