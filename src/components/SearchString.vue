@@ -13,7 +13,9 @@ import { mapGetters, mapMutations } from "vuex";
 export default defineComponent({
   name: "search-string",
   methods: {
-    ...mapMutations({ enterQuery: "setQuery" }),
+    ...mapMutations({
+      enterQuery: "setPlace",
+    }),
   },
   computed: {
     ...mapGetters({ placeholder: "getPlaceholder" }),
